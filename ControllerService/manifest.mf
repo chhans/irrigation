@@ -1,0 +1,10 @@
+Manifest-Version: 2.0
+Bundle-Name: controllerservice
+Bundle-SymbolicName: controllerservice
+Bundle-Version: 1.0.0 
+Bundle-Description: Service Bundle for Irrigation System
+Bundle-Vendor: Knopflerfish
+Bundle-Activator: controllerservice.impl.Activator 
+Bundle-Category: irrigation
+Import-Package: org.osgi.framework
+Export-Package: controllerservice
