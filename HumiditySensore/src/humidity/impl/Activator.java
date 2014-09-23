@@ -1,21 +1,20 @@
-package humidity.impl;
+package humidity.impl; 
+import org.osgi.framework.BundleActivator; 
+import org.osgi.framework.BundleContext; 
+public class Activator implements BundleActivator { 
+	public static BundleContext bc = null; 
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
+	private HumidityThread thread = null; 
+	public void start(BundleContext bc) throws Exception { 
+		System.out.println("HumiditySensore starting..."); 
+		Activator.bc = bc; 
+		thread = new HumidityThread(); 
+		thread.start(); 
+	} 
 
-public class Activator implements BundleActivator {
-
-	@Override
-	public void start(BundleContext arg0) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void stop(BundleContext arg0) throws Exception {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
+	public void stop(BundleContext bc) throws Exception { 
+		System.out.println("Humidity Sensire stopping..."); 
+		thread.stopThread(); 
+		thread.join(); 
+	} 
 }

@@ -11,7 +11,6 @@ import controllerservice.ControllerService;
 public class Activator implements BundleActivator {
 	public static BundleContext bc = null;
 
-	@Override
 	public void start(BundleContext arg0) throws Exception {
 		System.out.println(bc.getBundle().getHeaders().get(Constants.BUNDLE_NAME) + " starting...");
 		Activator.bc = bc;
