@@ -6,4 +6,4 @@ Bundle-Description: Simple humidity sensore for irrigation system
 Bundle-Vendor: Knopflerfish
 Bundle-Activator: humidity.impl.Activator 
 Bundle-Category: irrigation 
-Import-Package: org.osgi.framework
+Import-Package: org.osgi.framework,controllerservice
