@@ -5,15 +5,15 @@ import sprinkler.Sprinkler;
 public class SprinklerImpl implements Sprinkler {
 
 	@Override
-	public void startSprinkler() {
+	public boolean startSprinkler() {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 
 	@Override
-	public void stopSprinkler() {
+	public boolean stopSprinkler() {
 		// TODO Auto-generated method stub
-		
+		return true;
 	}
 	
 }

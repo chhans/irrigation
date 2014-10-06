@@ -1,37 +1,34 @@
 <?xml version="1.0"?> 
 <project name="ControllerService" default="all"> 
- <property name="kf.dir" location="../.."/>
+	<property name="kf.dir" location="../.."/>
 	
-<property name="humiditysensore.jar"
-		location="../HumiditySensore/out/HumiditySensore.jar"/>
-	
- <property name="framework.jar" 
-location="${kf.dir}/knopflerfish_osgi_5.1.0/osgi/framework.jar"/>
+	<property name="humiditysensore.jar" location="../HumiditySensore/out/HumiditySensore.jar"/>
+	<property name="sprinkler.jar" location="../Sprinkler/out/Sprinkler.jar"/>
+	<property name="framework.jar" location="${kf.dir}/knopflerfish_osgi_5.1.0/osgi/framework.jar"/>
  
- <target name="all" depends="init,compile,jar"/> 
- <target name="init"> 
-<mkdir dir="out/classes"/> 
- </target> 
- <target name="compile"> 
-<javac destdir = "out/classes" 
- debug = "on" 
- srcdir = "src" includeantruntime="false">
- <classpath>
-<pathelement location="${framework.jar}"/>
-<pathelement location="${humiditysensore.jar}"/>
- </classpath> 
-</javac> 
- </target> 
- <target name="jar"> 
-<jar basedir = "out/classes" 
- jarfile = "out/${ant.project.name}.jar" 
- compress = "true" 
- includes = "**/*" 
- manifest = "manifest.mf"> 
- <fileset dir="resources"/>
- </jar>
- </target> 
- <target name="clean"> 
-<delete dir = "out"/> 
- </target> 
+	<target name="all" depends="init,compile,jar"/> 
+	
+	<target name="init"> 
+		<mkdir dir="out/classes"/> 
+	</target> 
+ 
+	<target name="compile"> 
+		<javac destdir = "out/classes" debug = "on" srcdir = "src" includeantruntime="false">
+ 			<classpath>
+				<pathelement location="${framework.jar}"/>
+				<pathelement location="${humiditysensore.jar}"/>
+ 				<pathelement location="${sprinkler.jar}"/>
+ 			</classpath> 
+		</javac>
+	</target> 
+ 
+	<target name="jar"> 
+		<jar basedir = "out/classes" jarfile = "out/${ant.project.name}.jar" compress = "true" includes = "**/*" manifest = "manifest.mf"> 
+ 			<fileset dir="resources"/>
+		</jar>
+	</target>
+	
+	<target name="clean"> 
+		<delete dir = "out"/> 
+	</target> 
 </project> 

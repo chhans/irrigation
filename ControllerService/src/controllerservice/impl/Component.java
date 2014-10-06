@@ -1,12 +1,12 @@
 package controllerservice.impl;
 
+import sprinkler.Sprinkler;
 import common.ServiceUserThread;
-
 import humidity.HumiditySensore;
 
 public class Component {
 
-
+	private Sprinkler sprinkler;
 	HumiditySensore humiditySensore;
 	ServiceUserThread thread;
 
@@ -40,6 +40,16 @@ public class Component {
 			}
 			thread = null;
 		}
+	}
+	
+	protected void setSprinkler(Sprinkler sprinkler) {
+		log("setSprinkler");
+		this.sprinkler = sprinkler;
+	}
+	
+	protected void unsetSprinkler(Sprinkler sprinkler) {
+		log("unsetSprinkler");
+		this.sprinkler = null;
 	}
 
 	private void log(String message) { 

@@ -6,4 +6,5 @@ Bundle-Description: Sprinkler for irrigation system
 Bundle-Vendor: Knopflerfish
 Bundle-Activator: sprinkler.impl.Activator 
 Bundle-Category: irrigation 
-Import-Package: org.osgi.framework,controllerservice
+Import-Package: org.osgi.framework
+Export-Package: sprinkler

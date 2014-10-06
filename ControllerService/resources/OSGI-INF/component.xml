@@ -11,3 +11,13 @@ class="controllerservice.impl.Component"/>
 	unbind = "unsetHumiditySensore"
  />
 </component>
+
+<component xmlns = "http://www.osgi.org/xmlns/scr/v1.0.0" name = "sprinklercomponent">
+	<implementation class="controllerservice.impl.Component"/>
+	<reference
+		name = "SPRINKLER"
+		interface = "sprinkler.Sprinkler"
+		bind = "setSprinkler"
+		unbind = "unsetSprinkler"
+	/>
+</component>
