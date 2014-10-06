@@ -1,9 +1,10 @@
 Manifest-Version: 2.0
-Bundle-Name: HumiditySensore 
-Bundle-SymbolicName: HumiditySensore 
+Bundle-Name: humidity 
+Bundle-SymbolicName: humidity
 Bundle-Version: 1.0.0 
 Bundle-Description: Simple humidity sensore for irrigation system 
 Bundle-Vendor: Knopflerfish
 Bundle-Activator: humidity.impl.Activator 
 Bundle-Category: irrigation 
-Import-Package: org.osgi.framework,controllerservice
+Import-Package: org.osgi.framework
+Export-Package: humidity

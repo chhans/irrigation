@@ -4,7 +4,6 @@ Bundle-SymbolicName: controllerservice
 Bundle-Version: 1.0.0 
 Bundle-Description: Service Bundle for Irrigation System
 Bundle-Vendor: Knopflerfish
-Bundle-Activator: controllerservice.impl.Activator 
 Bundle-Category: irrigation
-Import-Package: org.osgi.framework
-Export-Package: controllerservice
+Import-Package: org.osgi.framework,humidity
+Service-Component: OSGI-INF/component.xml

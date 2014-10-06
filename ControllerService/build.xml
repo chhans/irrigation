@@ -1,7 +1,10 @@
 <?xml version="1.0"?> 
 <project name="ControllerService" default="all"> 
  <property name="kf.dir" location="../.."/>
- 
+	
+<property name="humiditysensore.jar"
+		location="../HumiditySensore/out/HumiditySensore.jar"/>
+	
  <property name="framework.jar" 
 location="${kf.dir}/knopflerfish_osgi_5.1.0/osgi/framework.jar"/>
  
@@ -15,6 +18,7 @@ location="${kf.dir}/knopflerfish_osgi_5.1.0/osgi/framework.jar"/>
  srcdir = "src" includeantruntime="false">
  <classpath>
 <pathelement location="${framework.jar}"/>
+<pathelement location="${humiditysensore.jar}"/>
  </classpath> 
 </javac> 
  </target> 
@@ -23,7 +27,9 @@ location="${kf.dir}/knopflerfish_osgi_5.1.0/osgi/framework.jar"/>
  jarfile = "out/${ant.project.name}.jar" 
  compress = "true" 
  includes = "**/*" 
- manifest = "manifest.mf"/> 
+ manifest = "manifest.mf"> 
+ <fileset dir="resources"/>
+ </jar>
  </target> 
  <target name="clean"> 
 <delete dir = "out"/> 

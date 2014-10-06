@@ -1,9 +1,6 @@
 <?xml version="1.0"?> 
 <project name="HumiditySensore" default="all"> 
  <property name="kf.dir" location="../.."/>
-
-<property name="controllerservice.jar"
-	location="../ControllerService/out/ControllerService.jar"/>
 	
  <property name="framework.jar" 
 location="${kf.dir}/knopflerfish_osgi_5.1.0/osgi/framework.jar"/>
@@ -18,7 +15,7 @@ location="${kf.dir}/knopflerfish_osgi_5.1.0/osgi/framework.jar"/>
  srcdir = "src" includeantruntime="false">
  <classpath>
 <pathelement location="${framework.jar}"/>
-<pathelement location="${controllerservice.jar}"/>
+
  </classpath> 
 </javac> 
  </target> 
