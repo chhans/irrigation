@@ -6,6 +6,7 @@ import java.util.List;
 import motion.MotionSensor;
 import sprinkler.Sprinkler;
 import common.Log;
+import common.MotionSensorThread;
 import common.ServiceUserThread;
 import common.SprinklerThread;
 import common.TimeThread;
@@ -15,11 +16,15 @@ public class Component {
 	//TODO: Stop time thread when stopping last service
 	
 	private List<Sprinkler> sprinklers = new ArrayList<Sprinkler>();
+	private List<MotionSensor> motionSensors = new ArrayList<MotionSensor>();
+	
+	private TimeThread time = new TimeThread("TIME");
+	private SprinklerThread sprinklerThread;
+	private MotionSensorThread motionSensorThread;
+	
 	HumiditySensore humiditySensore;
 	ServiceUserThread thread;
-	SprinklerThread sprinklerThread;
-	private TimeThread time = new TimeThread("TIME");
-
+	
 	public Component() {
 		if (Log.time == null) {
 			Log.time = time;
@@ -73,16 +78,18 @@ public class Component {
 			}
 		}
 		
-		//TODO: Remove when system is working:
+		//TODO: Remove when system is working: OBS! When you stop the sprinkler, time stops working for now
 		time.stopThread();
 	}
 	
 	protected void setMotionSensor(MotionSensor motionSensor) {
-		//TODO: Fix
+		Log.log("Motion sensor registered");
+		this.motionSensors.add(motionSensor);
+		//TODO: Add motion sensor thread polling the motionSensor once every 200ms
 	}
 	
 	protected void unsetMotionSensor(MotionSensor motionSensor) {
-		//TODO: Fix
+		Log.log("Motion sensor unregistered");
+		this.motionSensors.remove(motionSensor);
 	}
-
 }

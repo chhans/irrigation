@@ -2,8 +2,6 @@ package humidity.impl;
 
 import humidity.HumiditySensore;
 
-
-
 public class HumiditySensoreImpl implements HumiditySensore { 
 	HumiditySensoreThread thread;
 	public HumiditySensoreImpl(){
@@ -14,6 +12,4 @@ public class HumiditySensoreImpl implements HumiditySensore {
 	public int getHumidity(){
 		return this.thread.humidity;
 	}
-	
-	
 } 
