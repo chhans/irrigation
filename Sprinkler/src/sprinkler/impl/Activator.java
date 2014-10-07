@@ -15,7 +15,6 @@ public class Activator implements BundleActivator {
 
 	    Sprinkler sprinkler = new SprinklerImpl();
 	    ServiceRegistration registration = bc.registerService(Sprinkler.class.getName(), sprinkler, new Hashtable());
-	    System.out.println("Service registered: Sprinkler");
 	}
 
 	public void stop(BundleContext bc) throws Exception { 

@@ -4,23 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sprinkler.Sprinkler;
+import common.Log;
 import common.ServiceUserThread;
 import common.SprinklerThread;
+import common.TimeThread;
 import humidity.HumiditySensore;
 
 public class Component {
+	//TODO: Stop time thread when stopping last service
 	
 	private List<Sprinkler> sprinklers = new ArrayList<Sprinkler>();
 	HumiditySensore humiditySensore;
 	ServiceUserThread thread;
 	SprinklerThread sprinklerThread;
+	private TimeThread time = new TimeThread("TIME");
 
+	public Component() {
+		if (Log.time == null) {
+			Log.time = time;
+			time.start();
+		}
+	}
+	
 	/**
 	 * Called by the Declarative Service component finds
 	 * a registered DateService as specified in the component.xml
 	 */
 	protected void setHumiditySensore(HumiditySensore humiditySensore) {
-		log("setHumiditySensore");
+		Log.log("Humidity sensor registered");
 		this.humiditySensore= humiditySensore;
 
 		if(thread == null) {
@@ -34,7 +45,7 @@ public class Component {
 	 * unregistered DateService as specified in the component.xml
 	 */
 	protected void unsetHumiditySensore(HumiditySensore humiditySensore) { 
-		log("unsetHumiditySensore");
+		Log.log("Humidity sensor unregistered");
 		this.humiditySensore = null;
 		if(thread != null) {
 			thread.stopThread(); 
@@ -48,7 +59,7 @@ public class Component {
 	}
 	
 	protected void setSprinkler(Sprinkler sprinkler) {
-		log("setSprinkler");
+		Log.log("Sprinkler registered");
 		this.sprinklers.add(sprinkler);
 		if (sprinklerThread == null) {
 			sprinklerThread = new SprinklerThread(sprinkler, "SprinklerThread");
@@ -57,9 +68,10 @@ public class Component {
 	}
 	
 	protected void unsetSprinkler(Sprinkler sprinkler) {
-		log("unsetSprinkler");
+		Log.log("Sprinkler unregistered");
 		this.sprinklers.remove(sprinkler);
 		if (sprinklerThread != null) {
+			sprinklerThread.interrupt();
 			sprinklerThread.stopThread();
 			try {
 				sprinklerThread.join();
@@ -67,10 +79,9 @@ public class Component {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	private void log(String message) { 
-		System.out.println("dateservice component: " + message); 
+		
+		//TODO: Remove when system is working:
+		time.stopThread();
 	}
 
 }

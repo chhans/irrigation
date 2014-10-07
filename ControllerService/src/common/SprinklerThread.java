@@ -14,29 +14,29 @@ public class SprinklerThread extends Thread {
 	
 	public void run() {
 		while (running) {
-			//Running sprinkler every 10 seconds for 1 second
+			//If no sensors are available, run every 24h for 1/2 hour.
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(Log.time.realMinutesToSystemMillis(60*24));
 				if (!running) break;
 				periodicIrrigation();
 			} catch (InterruptedException e) {
-				System.out.println("SprinklerThread ERROR: " + e);
+				Log.log("Sprinkler Interrupted " + e);
 			}
 		} 
 	}
 
-	public void stopThread() { 
-		System.out.println("Stopping automatic irrigation for "+this);
+	public void stopThread() {
 		this.running = false; 
 	}
 	
 	private void periodicIrrigation() {
 		this.startSprinkler("Periodic irrigation");
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(Log.time.realMinutesToSystemMillis(30));
 			this.stopSprinkler("Periodic irrigation");
 		} catch (Exception e) {
-			System.out.println("SprinklerThread ERROR: " + e);
+			Log.log("Sprinkler Interrupted " + e);
+			this.stopSprinkler("Interrupted");
 		}
 	}
 	
@@ -45,13 +45,13 @@ public class SprinklerThread extends Thread {
 		try {
 			success = sprinkler.startSprinkler();
 		} catch (Exception e) {
-			System.out.println("Exception occured during service usage: " + e);
+			Log.log("Exception occured during service usage: " + e);
 		}
 		
 		if (success) {
-			System.out.println(startReason + ": sprinkler started");
+			Log.log(startReason + ": sprinkler started");
 		} else {
-			System.out.println("Sprinkler could not be started");
+			Log.log("Sprinkler could not be started (it may already be on)");
 		}
 	}
 	
@@ -60,13 +60,13 @@ public class SprinklerThread extends Thread {
 		try {
 			success = sprinkler.stopSprinkler();
 		} catch (Exception e) {
-			System.out.println("Exception occured during service usage: " + e);
+			Log.log("Exception occured during service usage: " + e);
 		}
 		
 		if (success) {
-			System.out.println(stopReason + ": sprinkler stopped");
+			Log.log(stopReason + ": sprinkler stopped");
 		} else {
-			System.out.println("Sprinkler could not be stopped");
+			Log.log("Sprinkler could not be stopped (it may already be off)");
 		}
 	}
 }
