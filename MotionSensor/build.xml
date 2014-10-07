@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="Sprinkler" default="all">
+<project name="MotionSensor" default="all">
 	<property name="kf.dir" location="../.." />
 
 	<property name="controllerservice.jar" location="../ControllerService/out/ControllerService.jar" />

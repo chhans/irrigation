@@ -2,6 +2,7 @@
 <project name="ControllerService" default="all"> 
 	<property name="kf.dir" location="../.."/>
 	
+	<property name="motionsensor.jar" location="../MotionSensor/out/MotionSensor.jar"/>
 	<property name="humiditysensore.jar" location="../HumiditySensore/out/HumiditySensore.jar"/>
 	<property name="sprinkler.jar" location="../Sprinkler/out/Sprinkler.jar"/>
 	<property name="framework.jar" location="${kf.dir}/knopflerfish_osgi_5.1.0/osgi/framework.jar"/>
@@ -18,6 +19,7 @@
 				<pathelement location="${framework.jar}"/>
 				<pathelement location="${humiditysensore.jar}"/>
  				<pathelement location="${sprinkler.jar}"/>
+ 				<pathelement location="${motionsensor.jar}"/>
  			</classpath> 
 		</javac>
 	</target> 

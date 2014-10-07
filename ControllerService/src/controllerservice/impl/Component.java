@@ -3,6 +3,7 @@ package controllerservice.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import motion.MotionSensor;
 import sprinkler.Sprinkler;
 import common.Log;
 import common.ServiceUserThread;
@@ -26,10 +27,6 @@ public class Component {
 		}
 	}
 	
-	/**
-	 * Called by the Declarative Service component finds
-	 * a registered DateService as specified in the component.xml
-	 */
 	protected void setHumiditySensore(HumiditySensore humiditySensore) {
 		Log.log("Humidity sensor registered");
 		this.humiditySensore= humiditySensore;
@@ -40,10 +37,6 @@ public class Component {
 		}
 	}
 
-	/**
-	 * Called by the Declarative Service component notices an
-	 * unregistered DateService as specified in the component.xml
-	 */
 	protected void unsetHumiditySensore(HumiditySensore humiditySensore) { 
 		Log.log("Humidity sensor unregistered");
 		this.humiditySensore = null;
@@ -82,6 +75,14 @@ public class Component {
 		
 		//TODO: Remove when system is working:
 		time.stopThread();
+	}
+	
+	protected void setMotionSensor(MotionSensor motionSensor) {
+		//TODO: Fix
+	}
+	
+	protected void unsetMotionSensor(MotionSensor motionSensor) {
+		//TODO: Fix
 	}
 
 }

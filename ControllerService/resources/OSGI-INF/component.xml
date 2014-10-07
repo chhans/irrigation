@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
-<component
- xmlns = "http://www.osgi.org/xmlns/scr/v1.0.0"
- name = "testcomponent">
- <implementation
-class="controllerservice.impl.Component"/>
- <reference 
- 	name = "HUIMIDITYSENSORE"
-	interface = "humidity.HumiditySensore"
-	bind = "setHumiditySensore"
-	unbind = "unsetHumiditySensore"
- />
+
+<component xmlns = "http://www.osgi.org/xmlns/scr/v1.0.0" name = "humiditysensorcomponent">
+	<implementation class="controllerservice.impl.Component"/>
+ 	<reference 
+		name = "HUIMIDITYSENSOR"
+		interface = "humidity.HumiditySensore"
+		bind = "setHumiditySensore"
+		unbind = "unsetHumiditySensore"
+	/>
 </component>
 
 <component xmlns = "http://www.osgi.org/xmlns/scr/v1.0.0" name = "sprinklercomponent">
@@ -19,5 +17,15 @@ class="controllerservice.impl.Component"/>
 		interface = "sprinkler.Sprinkler"
 		bind = "setSprinkler"
 		unbind = "unsetSprinkler"
+	/>
+</component>
+
+<component xmlns = "http://www.osgi.org/xmlns/scr/v1.0.0" name = "motionsensorcomponent">
+	<implementation class="controllerservice.impl.Component"/>
+	<reference
+		name = "MOTIONSENSOR"
+		interface = "motion.MotionSensor"
+		bind = "setMotionSensor"
+		unbind = "unsetMotionSensor"
 	/>
 </component>

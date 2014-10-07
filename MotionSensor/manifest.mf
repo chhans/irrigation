@@ -1,0 +1,10 @@
+Manifest-Version: 2.0
+Bundle-Name: MotionSensor 
+Bundle-SymbolicName: MotionSensor 
+Bundle-Version: 1.0.0 
+Bundle-Description: Motion sensor for irrigation system 
+Bundle-Vendor: Knopflerfish
+Bundle-Activator: motion.impl.Activator 
+Bundle-Category: irrigation 
+Import-Package: org.osgi.framework
+Export-Package: motion
