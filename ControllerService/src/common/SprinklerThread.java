@@ -16,11 +16,11 @@ public class SprinklerThread extends Thread {
 		while (running) {
 			//If no sensors are available, run every 24h for 1/2 hour.
 			try {
-				Thread.sleep(Log.time.realMinutesToSystemMillis(60*24));
+				Thread.sleep(Log.time.realMinutesToSystemMillis((int) (60*23.5)));
 				if (!running) break;
 				periodicIrrigation();
 			} catch (InterruptedException e) {
-				Log.log("Sprinkler Interrupted " + e);
+				//Knopflerfish will fix it
 			}
 		} 
 	}
@@ -35,8 +35,7 @@ public class SprinklerThread extends Thread {
 			Thread.sleep(Log.time.realMinutesToSystemMillis(30));
 			this.stopSprinkler("Periodic irrigation");
 		} catch (Exception e) {
-			Log.log("Sprinkler Interrupted " + e);
-			this.stopSprinkler("Interrupted");
+			this.stopSprinkler("Sprinkler was unregistered");
 		}
 	}
 	
