@@ -1,13 +1,11 @@
-package humidity.impl; 
+package humidity.impl;
+
 import java.util.Hashtable;
-
 import humidity.HumiditySensore;
-
 import org.osgi.framework.BundleActivator; 
 import org.osgi.framework.BundleContext; 
 import org.osgi.framework.Constants;
 import org.osgi.framework.ServiceRegistration;
-
 
 public class Activator implements BundleActivator { 
 

@@ -1,14 +1,19 @@
 package controllerservice.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import sprinkler.Sprinkler;
 import common.ServiceUserThread;
+import common.SprinklerThread;
 import humidity.HumiditySensore;
 
 public class Component {
-
-	private Sprinkler sprinkler;
+	
+	private List<Sprinkler> sprinklers = new ArrayList<Sprinkler>();
 	HumiditySensore humiditySensore;
 	ServiceUserThread thread;
+	SprinklerThread sprinklerThread;
 
 	/**
 	 * Called by the Declarative Service component finds
@@ -44,16 +49,28 @@ public class Component {
 	
 	protected void setSprinkler(Sprinkler sprinkler) {
 		log("setSprinkler");
-		this.sprinkler = sprinkler;
+		this.sprinklers.add(sprinkler);
+		if (sprinklerThread == null) {
+			sprinklerThread = new SprinklerThread(sprinkler, "SprinklerThread");
+			sprinklerThread.start();
+		}
 	}
 	
 	protected void unsetSprinkler(Sprinkler sprinkler) {
 		log("unsetSprinkler");
-		this.sprinkler = null;
+		this.sprinklers.remove(sprinkler);
+		if (sprinklerThread != null) {
+			sprinklerThread.stopThread();
+			try {
+				sprinklerThread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private void log(String message) { 
 		System.out.println("dateservice component: " + message); 
-	} 
+	}
 
 }
