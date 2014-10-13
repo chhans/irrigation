@@ -43,7 +43,7 @@ public class HumidityThread extends Thread {
 	}
 
 	public void stopThread() {
-		this.running = false; 
+		this.running = false;
 	}
 	
 	private int randomDecrease() {
