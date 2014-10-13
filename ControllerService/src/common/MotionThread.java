@@ -3,6 +3,7 @@ package common;
 import motion.MotionSensor;
 
 public class MotionThread extends Thread {
+	private static final String deviceName = "MOTION_SENSOR";
 	private MotionSensor sensor = null;
 	private boolean running = true;
 	
@@ -15,7 +16,7 @@ public class MotionThread extends Thread {
 		while (running) {
 			if (DeviceStatus.motionStatus != DeviceStatus.MotionStatus.UNREGISTERED) {
 				if (sensor.pollMotionSensor() && DeviceStatus.motionStatus == DeviceStatus.MotionStatus.NO_MOTION) {
-					Log.log("Motion detected");
+					Log.log("Motion detected", deviceName);
 					DeviceStatus.motionStatus = DeviceStatus.MotionStatus.MOTION;
 				} else if (!sensor.pollMotionSensor() && DeviceStatus.motionStatus == DeviceStatus.MotionStatus.MOTION) {
 					DeviceStatus.motionStatus = DeviceStatus.MotionStatus.NO_MOTION;

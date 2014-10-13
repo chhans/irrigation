@@ -21,6 +21,7 @@ import humidity.HumiditySensor;
 public class Component {
 	//TODO: Stop time thread when stopping last service
 	
+	private static final String deviceName = "CONTROLLER";
 	private TimeThread time = new TimeThread("TIME");
 	
 	private SprinklerThread sprinklerThread;
@@ -35,7 +36,7 @@ public class Component {
 	}
 	
 	protected void setHumiditySensor(HumiditySensor humiditySensor) {
-		Log.log("Humidity sensor registered");
+		Log.log("Humidity sensor registered", deviceName);
 		DeviceStatus.humidityStatus = -1;
 		if (humidityThread == null) {
 			humidityThread = new HumidityThread(humiditySensor, "HUMIDITY");
@@ -44,7 +45,7 @@ public class Component {
 	}
 
 	protected void unsetHumiditySensor(HumiditySensor humiditySensore) { 
-		Log.log("Humidity sensor unregistered");
+		Log.log("Humidity sensor unregistered", deviceName);
 		DeviceStatus.humidityStatus = Integer.MIN_VALUE;
 		if (humidityThread != null) {
 			humidityThread.stopThread();
@@ -58,7 +59,7 @@ public class Component {
 	}
 	
 	protected void setSprinkler(Sprinkler sprinkler) {
-		Log.log("Sprinkler registered");
+		Log.log("Sprinkler registered", deviceName);
 		DeviceStatus.sprinklerStatus = DeviceStatus.SprinklerStatus.OFF;
 		if (sprinklerThread == null) {
 			sprinklerThread = new SprinklerThread(sprinkler, "SPRINKLER");
@@ -67,13 +68,13 @@ public class Component {
 	}
 	
 	protected void unsetSprinkler(Sprinkler sprinkler) {
-		Log.log("Sprinkler unregistered");
+		Log.log("Sprinkler unregistered", deviceName);
 		DeviceStatus.sprinklerStatus = DeviceStatus.SprinklerStatus.UNREGISTERED;
 		sprinklerThread.stopThread();
 	}
 	
 	protected void setMotionSensor(MotionSensor motionSensor) {
-		Log.log("Motion sensor registered");
+		Log.log("Motion sensor registered", deviceName);
 		DeviceStatus.motionStatus = DeviceStatus.MotionStatus.NO_MOTION;
 		if (motionThread == null) {
 			motionThread = new MotionThread(motionSensor, "MOTION");
@@ -82,7 +83,7 @@ public class Component {
 	}
 	
 	protected void unsetMotionSensor(MotionSensor motionSensor) {
-		Log.log("Motion sensor unregistered");
+		Log.log("Motion sensor unregistered", deviceName);
 		DeviceStatus.motionStatus = DeviceStatus.MotionStatus.UNREGISTERED;
 		motionThread.stopThread();
 	}

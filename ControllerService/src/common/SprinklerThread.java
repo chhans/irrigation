@@ -6,7 +6,7 @@ import java.util.TimerTask;
 import sprinkler.Sprinkler;
 
 public class SprinklerThread extends Thread {
-	
+	private static final String deviceName = "SPRINKLER";
 	private Timer autoIrrigationTimer;
 	private Timer motionTimer;
 	private Sprinkler sprinkler = null;
@@ -30,6 +30,9 @@ public class SprinklerThread extends Thread {
 				motionTimer = new Timer();
 				motionTimer.schedule(new MotionIrrigation(), 0);
 			}
+			
+			//Humidity sensor irrigation
+			//if ()
 			
 			try {
 				Thread.sleep(200);
@@ -55,14 +58,14 @@ public class SprinklerThread extends Thread {
 				//TODO: Fix no such method error?
 				//sprinkler.startSprinkler();
 			} catch (Exception e) {
-				Log.log("Exception occured during service usage: " + e);
+				Log.log("Exception occured during service usage: " + e, deviceName);
 			}
 			
-			Log.log("!!" + startReason + ": sprinkler started");
+			Log.log(startReason + ": sprinkler started", deviceName);
 		} else if (DeviceStatus.sprinklerStatus == DeviceStatus.SprinklerStatus.ON) {
-			Log.log(startReason + ": failed to start sprinkler: already on");
+			Log.log(startReason + ": failed to start sprinkler: already on", deviceName);
 		} else {
-			Log.log(startReason + ": failed to start sprinkler: no sprinkler registered");
+			Log.log(startReason + ": failed to start sprinkler: no sprinkler registered", deviceName);
 		}
 	}
 	
@@ -70,12 +73,12 @@ public class SprinklerThread extends Thread {
 		if (DeviceStatus.sprinklerStatus == DeviceStatus.SprinklerStatus.ON) {
 			DeviceStatus.sprinklerStatus = DeviceStatus.SprinklerStatus.OFF;
 			//sprinkler.stopSprinkler();
-			Log.log(stopReason + ": sprinkler stopped");
+			Log.log(stopReason + ": sprinkler stopped", deviceName);
 			updateHumidity(sprinklerTime);
 		} else if (DeviceStatus.sprinklerStatus == DeviceStatus.SprinklerStatus.OFF) {
-			Log.log(stopReason + ": failed to stop sprinkler: already off");
+			Log.log(stopReason + ": failed to stop sprinkler: already off", deviceName);
 		} else {
-			Log.log(stopReason + ": failed to stop sprinkler: no sprinkler registered");
+			Log.log(stopReason + ": failed to stop sprinkler: no sprinkler registered", deviceName);
 		}
 	}
 	
@@ -87,6 +90,12 @@ public class SprinklerThread extends Thread {
 				DeviceStatus.humidityStatus = curHum + randInc;
 			} else {
 				DeviceStatus.humidityStatus = 100;
+			}
+			
+			if (curHum < 90 && curHum + randInc > 90) {
+				Log.log("Humidity very high", HumidityThread.deviceName);
+			} else if (curHum < 80 && curHum + randInc > 80) {
+				Log.log("Humidity high", HumidityThread.deviceName);
 			}
 		}
 	}
@@ -114,6 +123,14 @@ public class SprinklerThread extends Thread {
 			} catch (Exception e) {
 				stopSprinkler("Sprinkler was unregistered", 0);
 			}
+		}
+	}
+	
+	class HumidityIrrigation extends TimerTask {
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

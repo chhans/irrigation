@@ -2,7 +2,8 @@ package common;
 
 import humidity.HumiditySensor;
 
-public class HumidityThread extends Thread { 
+public class HumidityThread extends Thread {
+	protected static final String deviceName = "HUMIDITY_SENSOR";
 	private HumiditySensor sensor = null; 
 	private boolean running = true; 
 
@@ -14,7 +15,6 @@ public class HumidityThread extends Thread {
 	public void run() {
 		DeviceStatus.humidityStatus = randomHumidity();
 		while (running) {
-			//Cheating:
 			int humidity = DeviceStatus.humidityStatus;
 			
 			if (DeviceStatus.sprinklerStatus != DeviceStatus.SprinklerStatus.ON) {
@@ -26,20 +26,12 @@ public class HumidityThread extends Thread {
 				}
 			}
 			
-			System.out.println("Humi: "+humidity);
+			if (DeviceStatus.humidityStatus >= 20 && humidity < 20) {
+				Log.log("Humidity low", deviceName);
+			} else if (DeviceStatus.humidityStatus >= 10 && humidity < 10) {
+				Log.log("Humidity very low", deviceName);
+			}
 			DeviceStatus.humidityStatus = humidity;
-//			if (DeviceStatus.sprinklerStatus == DeviceStatus.SprinklerStatus.ON) {
-//				humidity += sprinklerIncrease();
-//			} else {
-//				humidity -= randomDecrease();
-//			}
-//			
-//			if (humidity > 100) {
-//				humidity = 100;
-//			} else if (humidity < -1) {
-//				humidity = 0;
-//			}
-//			System.out.println("Humidity: "+humidity);
 			
 			//TODO: Increase humidity if raining
 			
