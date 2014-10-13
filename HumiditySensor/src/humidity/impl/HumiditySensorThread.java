@@ -2,7 +2,7 @@ package humidity.impl;
 
 import java.util.Random;
 
-public class HumiditySensoreThread extends Thread {
+public class HumiditySensorThread extends Thread {
 	final int max = 100;
 	final int min = 1;
 	Random r = new Random();
@@ -28,7 +28,7 @@ public class HumiditySensoreThread extends Thread {
 		while(running){
 			updateHumidity();
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(200);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

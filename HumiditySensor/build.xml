@@ -1,5 +1,5 @@
 <?xml version="1.0"?> 
-<project name="HumiditySensore" default="all"> 
+<project name="HumiditySensor" default="all"> 
  <property name="kf.dir" location="../.."/>
 	
  <property name="controllerservice.jar" location="../ControllerService/out/ControllerService.jar"/>

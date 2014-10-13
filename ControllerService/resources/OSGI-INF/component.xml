@@ -3,10 +3,10 @@
 <component xmlns = "http://www.osgi.org/xmlns/scr/v1.0.0" name = "humiditysensorcomponent">
 	<implementation class="controllerservice.impl.Component"/>
  	<reference 
-		name = "HUIMIDITYSENSOR"
-		interface = "humidity.HumiditySensore"
-		bind = "setHumiditySensore"
-		unbind = "unsetHumiditySensore"
+		name = "HUMIDITYSENSOR"
+		interface = "humidity.HumiditySensor"
+		bind = "setHumiditySensor"
+		unbind = "unsetHumiditySensor"
 	/>
 </component>
 

@@ -5,10 +5,10 @@ import sprinkler.Sprinkler;
 import common.DeviceStatus;
 import common.Log;
 import common.MotionThread;
-import common.ServiceUserThread;
+import common.HumidityThread;
 import common.SprinklerThread;
 import common.TimeThread;
-import humidity.HumiditySensore;
+import humidity.HumiditySensor;
 
 /**
  *	Will run the sprinkler periodically every 24h for 1/2 hour.
@@ -20,17 +20,13 @@ import humidity.HumiditySensore;
 
 public class Component {
 	//TODO: Stop time thread when stopping last service
-	//TODO: Use single ControllerThread to control all threads?
 	
 	private TimeThread time = new TimeThread("TIME");
 	
 	private SprinklerThread sprinklerThread;
 	private MotionThread motionThread;
+	private HumidityThread humidityThread;
 	
-	HumiditySensore humiditySensore;
-	ServiceUserThread thread;
-	
-	//TODO: Stop timethread when stopping last service
 	public Component() {
 		if (Log.time == null) {
 			Log.time = time;
@@ -38,27 +34,26 @@ public class Component {
 		}
 	}
 	
-	protected void setHumiditySensore(HumiditySensore humiditySensore) {
+	protected void setHumiditySensor(HumiditySensor humiditySensor) {
 		Log.log("Humidity sensor registered");
-		this.humiditySensore= humiditySensore;
-
-		if(thread == null) {
-			thread = new ServiceUserThread(humiditySensore, "declarative example"); 
-			thread.start(); 
+		DeviceStatus.humidityStatus = -1;
+		if (humidityThread == null) {
+			humidityThread = new HumidityThread(humiditySensor, "HUMIDITY");
+			humidityThread.start();
 		}
 	}
 
-	protected void unsetHumiditySensore(HumiditySensore humiditySensore) { 
+	protected void unsetHumiditySensor(HumiditySensor humiditySensore) { 
 		Log.log("Humidity sensor unregistered");
-		this.humiditySensore = null;
-		if(thread != null) {
-			thread.stopThread(); 
-			try { 
-				thread.join(); 
-			} catch (InterruptedException e) { 
-				e.printStackTrace(); 
+		DeviceStatus.humidityStatus = Integer.MIN_VALUE;
+		if (humidityThread != null) {
+			humidityThread.stopThread();
+			try {
+				humidityThread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
-			thread = null;
+			humidityThread = null;
 		}
 	}
 	

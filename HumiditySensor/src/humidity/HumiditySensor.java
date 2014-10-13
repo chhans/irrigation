@@ -1,5 +1,5 @@
 package humidity;
 
-public interface HumiditySensore {
+public interface HumiditySensor {
 	public int getHumidity();
 }

@@ -66,15 +66,28 @@ public class SprinklerThread extends Thread {
 		}
 	}
 	
-	private void stopSprinkler(String stopReason) {
+	private void stopSprinkler(String stopReason, int sprinklerTime) {
 		if (DeviceStatus.sprinklerStatus == DeviceStatus.SprinklerStatus.ON) {
 			DeviceStatus.sprinklerStatus = DeviceStatus.SprinklerStatus.OFF;
 			//sprinkler.stopSprinkler();
 			Log.log(stopReason + ": sprinkler stopped");
+			updateHumidity(sprinklerTime);
 		} else if (DeviceStatus.sprinklerStatus == DeviceStatus.SprinklerStatus.OFF) {
 			Log.log(stopReason + ": failed to stop sprinkler: already off");
 		} else {
 			Log.log(stopReason + ": failed to stop sprinkler: no sprinkler registered");
+		}
+	}
+	
+	private void updateHumidity(int sprinklerTime) {
+		int curHum = DeviceStatus.humidityStatus;
+		if (curHum > -1) {
+			int randInc = sprinklerTime/3 * (new java.util.Random().nextInt(5) + 1);
+			if (curHum + randInc <= 100) {
+				DeviceStatus.humidityStatus = curHum + randInc;
+			} else {
+				DeviceStatus.humidityStatus = 100;
+			}
 		}
 	}
 	
@@ -84,9 +97,9 @@ public class SprinklerThread extends Thread {
 			startSprinkler("Periodic irrigation");
 			try {
 				Thread.sleep(Log.time.realMinutesToSystemMillis(30));
-				stopSprinkler("Periodic irrigation");
+				stopSprinkler("Periodic irrigation", 30);
 			} catch (Exception e) {
-				stopSprinkler("Sprinkler was unregistered");
+				stopSprinkler("Sprinkler was unregistered", 0);
 			}
 		}
 	}
@@ -97,9 +110,9 @@ public class SprinklerThread extends Thread {
 			startSprinkler("Punish the trespassers");
 			try {
 				Thread.sleep(Log.time.realMinutesToSystemMillis(5));
-				stopSprinkler("Punish the trespassers");
+				stopSprinkler("Punish the trespassers", 5);
 			} catch (Exception e) {
-				stopSprinkler("ERROR?");
+				stopSprinkler("Sprinkler was unregistered", 0);
 			}
 		}
 	}

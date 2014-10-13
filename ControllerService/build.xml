@@ -3,7 +3,7 @@
 	<property name="kf.dir" location="../.."/>
 	
 	<property name="motionsensor.jar" location="../MotionSensor/out/MotionSensor.jar"/>
-	<property name="humiditysensore.jar" location="../HumiditySensore/out/HumiditySensore.jar"/>
+	<property name="humiditysensor.jar" location="../HumiditySensor/out/HumiditySensor.jar"/>
 	<property name="sprinkler.jar" location="../Sprinkler/out/Sprinkler.jar"/>
 	<property name="framework.jar" location="${kf.dir}/knopflerfish_osgi_5.1.0/osgi/framework.jar"/>
  
@@ -17,7 +17,7 @@
 		<javac destdir = "out/classes" debug = "on" srcdir = "src" includeantruntime="false">
  			<classpath>
 				<pathelement location="${framework.jar}"/>
-				<pathelement location="${humiditysensore.jar}"/>
+				<pathelement location="${humiditysensor.jar}"/>
  				<pathelement location="${sprinkler.jar}"/>
  				<pathelement location="${motionsensor.jar}"/>
  			</classpath> 
