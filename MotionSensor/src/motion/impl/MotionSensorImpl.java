@@ -1,18 +1,20 @@
 package motion.impl;
 
+import java.util.Random;
 import motion.MotionSensor;
 
 public class MotionSensorImpl implements MotionSensor {
-	private MotionSensorThread thread;
+	//private MotionSensorThread thread;
 	
 	public MotionSensorImpl() {
-		this.thread = new MotionSensorThread();
-		this.thread.start();
-		//TODO: Stop thread if motion sensor is unregistered
+		//this.thread = new MotionSensorThread();
+		//this.thread.start();
 	}
 	
 	public boolean pollMotionSensor() {
-		return false;
+		//TODO: Cheat to simulate easily
+		return (new Random().nextInt(20) == 1);
+		//return thread.motion;
 	}
-
+	
 }

@@ -15,7 +15,8 @@ public class Activator implements BundleActivator {
 		MotionSensor sensor = new MotionSensorImpl();
 		ServiceRegistration registration = bc.registerService(MotionSensor.class.getName(), sensor, new Hashtable());
 	} 
-	public void stop(BundleContext bc) throws Exception { 
-		Activator.bc = null; 
+	
+	public void stop(BundleContext bc) throws Exception {
+		Activator.bc = null;
 	}
 }

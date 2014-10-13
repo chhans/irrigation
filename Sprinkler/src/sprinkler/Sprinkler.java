@@ -1,6 +1,6 @@
 package sprinkler;
 
 public interface Sprinkler {
-	public boolean startSprinkler();
-	public boolean stopSprinkler();
+	public void startSprinkler();
+	public void stopSprinkler();
 }

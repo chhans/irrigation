@@ -3,17 +3,16 @@ package sprinkler.impl;
 import sprinkler.Sprinkler;
 
 public class SprinklerImpl implements Sprinkler {
-
+	private boolean on = false;
+		
 	@Override
-	public boolean startSprinkler() {
-		// TODO Auto-generated method stub
-		return true;
+	public void startSprinkler() {
+		on = true;
 	}
 
 	@Override
-	public boolean stopSprinkler() {
-		// TODO Auto-generated method stub
-		return true;
+	public void stopSprinkler() {
+		on = false;
 	}
 	
 }

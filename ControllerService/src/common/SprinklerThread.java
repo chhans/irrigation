@@ -1,9 +1,14 @@
 package common;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import sprinkler.Sprinkler;
 
 public class SprinklerThread extends Thread {
 	
+	private Timer autoIrrigationTimer;
+	private Timer motionTimer;
 	private Sprinkler sprinkler = null;
 	private boolean running = true;
 	
@@ -14,58 +19,88 @@ public class SprinklerThread extends Thread {
 	
 	public void run() {
 		while (running) {
-			//If no sensors are available, run every 24h for 1/2 hour.
+			//Periodic irrigation every 24h
+			if (sprinkler != null && autoIrrigationTimer == null) {
+				autoIrrigationTimer = new Timer();
+				autoIrrigationTimer.scheduleAtFixedRate(new PeriodicIrrigation(), Log.time.realMinutesToSystemMillis((int) (60*23.5)), Log.time.realMinutesToSystemMillis(60*24));
+			}
+			
+			//Motion sensor irrigation
+			if (DeviceStatus.motionStatus == DeviceStatus.MotionStatus.MOTION && (Log.time.getCurrentTime().getTime()/(60*60*1000) % 24) <= 6) {
+				motionTimer = new Timer();
+				motionTimer.schedule(new MotionIrrigation(), 0);
+			}
+			
 			try {
-				Thread.sleep(Log.time.realMinutesToSystemMillis((int) (60*23.5)));
+				Thread.sleep(200);
 				if (!running) break;
-				periodicIrrigation();
 			} catch (InterruptedException e) {
-				//Knopflerfish will fix it
+	
 			}
 		} 
 	}
 
 	public void stopThread() {
-		this.running = false; 
-	}
-	
-	private void periodicIrrigation() {
-		this.startSprinkler("Periodic irrigation");
-		try {
-			Thread.sleep(Log.time.realMinutesToSystemMillis(30));
-			this.stopSprinkler("Periodic irrigation");
-		} catch (Exception e) {
-			this.stopSprinkler("Sprinkler was unregistered");
-		}
+		autoIrrigationTimer.cancel();
+		autoIrrigationTimer = null;
+		this.running = false;
+		sprinkler = null;
 	}
 	
 	private void startSprinkler(String startReason) {
-		boolean success = false;
-		try {
-			success = sprinkler.startSprinkler();
-		} catch (Exception e) {
-			Log.log("Exception occured during service usage: " + e);
-		}
-		
-		if (success) {
-			Log.log(startReason + ": sprinkler started");
+		if (DeviceStatus.sprinklerStatus == DeviceStatus.SprinklerStatus.OFF) {
+			DeviceStatus.sprinklerStatus = DeviceStatus.SprinklerStatus.ON;
+			
+			try {
+				//TODO: Fix no such method error?
+				//sprinkler.startSprinkler();
+			} catch (Exception e) {
+				Log.log("Exception occured during service usage: " + e);
+			}
+			
+			Log.log("!!" + startReason + ": sprinkler started");
+		} else if (DeviceStatus.sprinklerStatus == DeviceStatus.SprinklerStatus.ON) {
+			Log.log(startReason + ": failed to start sprinkler: already on");
 		} else {
-			Log.log("Sprinkler could not be started (it may already be on)");
+			Log.log(startReason + ": failed to start sprinkler: no sprinkler registered");
 		}
 	}
 	
 	private void stopSprinkler(String stopReason) {
-		boolean success = false;
-		try {
-			success = sprinkler.stopSprinkler();
-		} catch (Exception e) {
-			Log.log("Exception occured during service usage: " + e);
-		}
-		
-		if (success) {
+		if (DeviceStatus.sprinklerStatus == DeviceStatus.SprinklerStatus.ON) {
+			DeviceStatus.sprinklerStatus = DeviceStatus.SprinklerStatus.OFF;
+			//sprinkler.stopSprinkler();
 			Log.log(stopReason + ": sprinkler stopped");
+		} else if (DeviceStatus.sprinklerStatus == DeviceStatus.SprinklerStatus.OFF) {
+			Log.log(stopReason + ": failed to stop sprinkler: already off");
 		} else {
-			Log.log("Sprinkler could not be stopped (it may already be off)");
+			Log.log(stopReason + ": failed to stop sprinkler: no sprinkler registered");
+		}
+	}
+	
+	class PeriodicIrrigation extends TimerTask {
+		@Override
+		public void run() {
+			startSprinkler("Periodic irrigation");
+			try {
+				Thread.sleep(Log.time.realMinutesToSystemMillis(30));
+				stopSprinkler("Periodic irrigation");
+			} catch (Exception e) {
+				stopSprinkler("Sprinkler was unregistered");
+			}
+		}
+	}
+	
+	class MotionIrrigation extends TimerTask {
+		@Override
+		public void run() {
+			startSprinkler("Punish the trespassers");
+			try {
+				Thread.sleep(Log.time.realMinutesToSystemMillis(5));
+				stopSprinkler("Punish the trespassers");
+			} catch (Exception e) {
+				stopSprinkler("ERROR?");
+			}
 		}
 	}
 }
