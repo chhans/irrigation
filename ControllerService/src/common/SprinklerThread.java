@@ -123,6 +123,7 @@ public class SprinklerThread extends Thread {
 		public void run() {
 			if (!startSprinkler(StartReason.PERIODIC)) {
 				this.cancel();
+				return;
 			}
 			try {
 				Thread.sleep(Log.time.realMinutesToSystemMillis(30));
@@ -136,7 +137,10 @@ public class SprinklerThread extends Thread {
 	class MotionIrrigation extends TimerTask {
 		@Override
 		public void run() {
-			startSprinkler(StartReason.MOTION);
+			if (!startSprinkler(StartReason.MOTION)) {
+				this.cancel();
+				return;
+			}
 			try {
 				Thread.sleep(Log.time.realMinutesToSystemMillis(5));
 				stopSprinkler(StartReason.MOTION, 5);
@@ -149,7 +153,10 @@ public class SprinklerThread extends Thread {
 	class HumidityIrrigation extends TimerTask {
 		@Override
 		public void run() {
-			startSprinkler(StartReason.HUMIDITY);
+			if (!startSprinkler(StartReason.HUMIDITY)) {
+				this.cancel();
+				return;
+			}
 			try {
 				Thread.sleep(Log.time.realMinutesToSystemMillis(30));
 				stopSprinkler(StartReason.HUMIDITY, 30);
