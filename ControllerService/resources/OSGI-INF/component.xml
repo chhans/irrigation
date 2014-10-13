@@ -29,3 +29,13 @@
 		unbind = "unsetMotionSensor"
 	/>
 </component>
+
+<component xmlns = "http://www.osgi.org/xmlns/scr/v1.0.0" name = "weathercomponent">
+	<implementation class="controllerservice.impl.Component"/>
+	<reference
+		name = "WEATHER"
+		interface = "weather.Weather"
+		bind = "setWeatherService"
+		unbind = "unsetWeatherService"
+	/>
+</component>

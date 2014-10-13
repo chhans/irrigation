@@ -2,6 +2,7 @@
 <project name="ControllerService" default="all"> 
 	<property name="kf.dir" location="../.."/>
 	
+	<property name="weather.jar" location="../WeatherService/out/Weather.jar"/>
 	<property name="motionsensor.jar" location="../MotionSensor/out/MotionSensor.jar"/>
 	<property name="humiditysensor.jar" location="../HumiditySensor/out/HumiditySensor.jar"/>
 	<property name="sprinkler.jar" location="../Sprinkler/out/Sprinkler.jar"/>
@@ -20,6 +21,7 @@
 				<pathelement location="${humiditysensor.jar}"/>
  				<pathelement location="${sprinkler.jar}"/>
  				<pathelement location="${motionsensor.jar}"/>
+ 				<pathelement location="${weather.jar}"/>
  			</classpath> 
 		</javac>
 	</target> 

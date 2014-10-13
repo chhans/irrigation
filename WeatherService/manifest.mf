@@ -1,0 +1,10 @@
+Manifest-Version: 2.0
+Bundle-Name: Weather 
+Bundle-SymbolicName: Weather 
+Bundle-Version: 1.0.0 
+Bundle-Description: Weather service for irrigation system 
+Bundle-Vendor: Knopflerfish
+Bundle-Activator: weather.impl.Activator 
+Bundle-Category: irrigation 
+Import-Package: org.osgi.framework
+Export-Package: weather

@@ -2,6 +2,7 @@ package controllerservice.impl;
 
 import motion.MotionSensor;
 import sprinkler.Sprinkler;
+import weather.Weather;
 import common.DeviceStatus;
 import common.Log;
 import common.MotionThread;
@@ -15,11 +16,12 @@ import humidity.HumiditySensor;
  *  If the humidity level (1-100) is above 80, no irrigation should be done.
  *  If the humidity level is below 10, irrigation should be initiated immediately.
  *  If the motion sensor is triggered between 00:00 and 06:00, the sprinkler should turn on for 5 minutes.
- *  If the weather service forecasts rain, no irrigation should be done (unless humidity is below 10).
+ *  If the weather service forecasts rain, no irrigation should be done unless humidity is below X??.
  */
 
 public class Component {
 	//TODO: Stop time thread when stopping last service
+	//TODO: To make it more Knopflerfishy, the threads that actually do stuff should reside in the bundles, not the controller. However, it works now, so maybe just not do it...
 	
 	private static final String deviceName = "CONTROLLER";
 	private TimeThread time = new TimeThread("TIME");
@@ -86,5 +88,14 @@ public class Component {
 		Log.log("Motion sensor unregistered", deviceName);
 		DeviceStatus.motionStatus = DeviceStatus.MotionStatus.UNREGISTERED;
 		motionThread.stopThread();
+	}
+	
+	protected void setWeatherService(Weather weatherService) {
+		Log.log("Weather service registered", deviceName);
+		//TODO: Device status & thread
+	}
+	
+	protected void unsetWeatherService(Weather weatherService) {
+		Log.log("Weather service unregistered", deviceName);
 	}
 }
