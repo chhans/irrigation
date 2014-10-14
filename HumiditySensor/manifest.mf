@@ -1,5 +1,5 @@
 Manifest-Version: 2.0
-Bundle-Name: humidity 
+Bundle-Name: HumiditySensor 
 Bundle-SymbolicName: humidity
 Bundle-Version: 1.0.0 
 Bundle-Description: Simple humidity sensor for irrigation system 

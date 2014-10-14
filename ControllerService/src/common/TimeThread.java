@@ -18,7 +18,7 @@ public class TimeThread extends Thread {
 		super(threadName);
 		if (currentTime == null) {
 			currentTime = new Date();
-			currentTime.setTime(currentTime.getTime() - (currentTime.getTime() % (200 * systemTimeRatio)));
+			currentTime.setTime(currentTime.getTime() - (currentTime.getTime() % (4800 * systemTimeRatio)));
 		}
 	}
 	

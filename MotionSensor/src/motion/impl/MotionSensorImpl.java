@@ -16,5 +16,4 @@ public class MotionSensorImpl implements MotionSensor {
 		return (new Random().nextInt(20) == 1);
 		//return thread.motion;
 	}
-	
 }

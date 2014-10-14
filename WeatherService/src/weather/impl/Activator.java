@@ -1,13 +1,10 @@
 package weather.impl;
 
+import weather.Weather;
 import java.util.Hashtable;
-
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
-
-import weather.Weather;
-
 
 public class Activator implements BundleActivator {
 	public static BundleContext bc = null; 

@@ -5,7 +5,7 @@ public class Log {
 	
 	public static void log(String message, String deviceName) {
 		if (time.getCurrentTime() != null) {
-			System.out.println(time.getFormattedTime() + "/" + deviceName + "\t- " + message);
+			System.out.println(time.getFormattedTime() + "\t\t" + deviceName + "\t- " + message);
 		} else {
 			System.out.println("TIME ERROR: Unable to get current time");
 		}

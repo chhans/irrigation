@@ -9,6 +9,7 @@ import common.MotionThread;
 import common.HumidityThread;
 import common.SprinklerThread;
 import common.TimeThread;
+import common.WeatherThread;
 import humidity.HumiditySensor;
 
 /**
@@ -29,6 +30,7 @@ public class Component {
 	private SprinklerThread sprinklerThread;
 	private MotionThread motionThread;
 	private HumidityThread humidityThread;
+	private WeatherThread weatherThread;
 	
 	public Component() {
 		if (Log.time == null) {
@@ -72,7 +74,15 @@ public class Component {
 	protected void unsetSprinkler(Sprinkler sprinkler) {
 		Log.log("Sprinkler unregistered", deviceName);
 		DeviceStatus.sprinklerStatus = DeviceStatus.SprinklerStatus.UNREGISTERED;
-		sprinklerThread.stopThread();
+		if (sprinklerThread != null) {
+			sprinklerThread.stopThread();
+			try {
+				sprinklerThread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			sprinklerThread = null;
+		}
 	}
 	
 	protected void setMotionSensor(MotionSensor motionSensor) {
@@ -87,15 +97,37 @@ public class Component {
 	protected void unsetMotionSensor(MotionSensor motionSensor) {
 		Log.log("Motion sensor unregistered", deviceName);
 		DeviceStatus.motionStatus = DeviceStatus.MotionStatus.UNREGISTERED;
-		motionThread.stopThread();
+		if (motionThread != null) {
+			motionThread.stopThread();
+			try {
+				motionThread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			motionThread = null;
+		}
 	}
 	
 	protected void setWeatherService(Weather weatherService) {
 		Log.log("Weather service registered", deviceName);
-		//TODO: Device status & thread
+		//TODO: Device status
+		if (weatherThread == null) {
+			weatherThread = new WeatherThread(weatherService, "WEATHER");
+			weatherThread.start();
+		}
 	}
 	
 	protected void unsetWeatherService(Weather weatherService) {
 		Log.log("Weather service unregistered", deviceName);
+		//TODO: Device status
+		if (weatherThread != null) {
+			weatherThread.stopThread();
+			try {
+				weatherThread.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			weatherThread = null;
+		}
 	}
 }

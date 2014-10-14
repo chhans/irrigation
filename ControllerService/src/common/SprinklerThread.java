@@ -35,7 +35,7 @@ public class SprinklerThread extends Thread {
 			}
 			
 			//Humidity sensor irrigation
-			if (DeviceStatus.humidityStatus < 10 && !humidityTimerRunning) {
+			if (DeviceStatus.humidityStatus < 10 && DeviceStatus.humidityStatus >= 0 && !humidityTimerRunning) {
 				humidityTimerRunning = true;
 				humidityTimer = new Timer();
 				humidityTimer.schedule(new HumidityIrrigation(), 0);
@@ -71,8 +71,7 @@ public class SprinklerThread extends Thread {
 			DeviceStatus.sprinklerStatus = DeviceStatus.SprinklerStatus.ON;
 			
 			try {
-				//TODO: Fix no such method error?
-				//sprinkler.startSprinkler();
+				sprinkler.startSprinkler();
 			} catch (Exception e) {
 				Log.log("Exception occured during service usage: " + e, deviceName);
 			}
@@ -90,7 +89,7 @@ public class SprinklerThread extends Thread {
 	private void stopSprinkler(StartReason reason, int sprinklerTime) {
 		if (DeviceStatus.sprinklerStatus == DeviceStatus.SprinklerStatus.ON) {
 			DeviceStatus.sprinklerStatus = DeviceStatus.SprinklerStatus.OFF;
-			//sprinkler.stopSprinkler();
+			sprinkler.stopSprinkler();
 			Log.log(reason.toString() + ": sprinkler stopped", deviceName);
 			updateHumidity(sprinklerTime);
 		} else if (DeviceStatus.sprinklerStatus == DeviceStatus.SprinklerStatus.OFF) {
