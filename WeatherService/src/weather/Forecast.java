@@ -67,11 +67,11 @@ public class Forecast {
 	
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder("[");
+		StringBuilder sb = new StringBuilder("");
 		for (int i = 0; i < forecastArray.length; ++i) {
-			sb.append(String.format("(%d:00, %s), ", i*2 + 2, forecastArray[i].toString()));
+			sb.append(String.format("(%d:00-%d:00, %s), ", i*2, i*2 + 2, forecastArray[i].toString()));
 		}
-		sb.replace(sb.length() - 2, sb.length() - 1, "]");
+		sb.replace(sb.length() - 2, sb.length() - 1, "");
 		return sb.toString();
 	}
 }
