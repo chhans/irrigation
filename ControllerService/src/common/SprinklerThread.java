@@ -62,9 +62,16 @@ public class SprinklerThread extends Thread {
 	}
 	
 	private boolean startSprinkler(StartReason reason) {
-		if (DeviceStatus.humidityStatus >= 80) {
+		if (DeviceStatus.humidityStatus >= 80 && reason != StartReason.MOTION) {
 			Log.log(reason.toString() + ": humidity too high, sprinkler not started", deviceName);
 			return false;
+		} else if (DeviceStatus.weatherStatus == DeviceStatus.WeatherStatus.HEAVY_RAIN || DeviceStatus.weatherStatus == DeviceStatus.WeatherStatus.LIGHT_RAIN) {
+			if (DeviceStatus.humidityStatus > 10) {
+				Log.log(reason.toString() + ": it's going to rain, sprinkler not started", deviceName);
+				return false;
+			} else {
+				Log.log("It's going to rain, but humidity is very low. Trying to start sprinkler.", deviceName);
+			}
 		}
 		
 		if (DeviceStatus.sprinklerStatus == DeviceStatus.SprinklerStatus.OFF) {

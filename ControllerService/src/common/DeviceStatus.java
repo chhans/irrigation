@@ -3,6 +3,7 @@ package common;
 public class DeviceStatus {
 	public static MotionStatus motionStatus = MotionStatus.UNREGISTERED;
 	public static SprinklerStatus sprinklerStatus = SprinklerStatus.UNREGISTERED;
+	public static WeatherStatus weatherStatus = WeatherStatus.UNREGISTERED;
 	public static int humidityStatus = Integer.MIN_VALUE; //MIN_VALUE signifies unregistered, -1 signifies no value has been registered yet.
 	private static DeviceStatus instance = null;
 	private DeviceStatus() {}
@@ -20,6 +21,10 @@ public class DeviceStatus {
 	
 	public enum MotionStatus {
 		MOTION, NO_MOTION, UNREGISTERED;
+	}
+	
+	public enum WeatherStatus {
+		SUNNY, NO_CLOUDS, CLOUDY, LIGHT_RAIN, HEAVY_RAIN, UNREGISTERED;
 	}
 
 }

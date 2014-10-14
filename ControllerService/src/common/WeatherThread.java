@@ -1,5 +1,6 @@
 package common;
 
+import weather.Forecast;
 import weather.Weather;
 
 public class WeatherThread extends Thread {
@@ -13,10 +14,20 @@ public class WeatherThread extends Thread {
 	}
 	
 	public void run() {
+		Forecast forecast = null;
 		while (running) {
-			Log.log(weatherService.getForecast().toString(), deviceName);
+			if (Log.time.getCurrentHour() == 0) {
+				forecast = weatherService.getForecast();
+				Log.log(forecast.toString(), deviceName);
+			} 
+			
+			if (forecast != null) {
+				int i = Log.time.getCurrentHour()/2;
+				DeviceStatus.weatherStatus = DeviceStatus.WeatherStatus.valueOf(forecast.getForecastArray()[i].toString());
+			}
+			
 			try {
-				Thread.sleep(Log.time.realMinutesToSystemMillis(60*24));
+				Thread.sleep(200);
 				if (!running) break;
 			} catch (InterruptedException e) {
 			}

@@ -48,7 +48,7 @@ public class Forecast {
 		}
 	}
 	
-	private enum WeatherEnum {
+	public enum WeatherEnum {
 		SUNNY, NO_CLOUDS, CLOUDY, LIGHT_RAIN, HEAVY_RAIN;
 		
 		private static ArrayList<WeatherEnum> order(boolean day) {
@@ -59,6 +59,10 @@ public class Forecast {
 			list.add(HEAVY_RAIN);
 			return list;
 		}
+	}
+	
+	public WeatherEnum[] getForecastArray() {
+		return forecastArray;
 	}
 	
 	@Override

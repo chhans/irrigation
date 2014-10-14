@@ -110,7 +110,7 @@ public class Component {
 	
 	protected void setWeatherService(Weather weatherService) {
 		Log.log("Weather service registered", deviceName);
-		//TODO: Device status
+		DeviceStatus.weatherStatus = DeviceStatus.WeatherStatus.NO_CLOUDS;
 		if (weatherThread == null) {
 			weatherThread = new WeatherThread(weatherService, "WEATHER");
 			weatherThread.start();
@@ -119,7 +119,7 @@ public class Component {
 	
 	protected void unsetWeatherService(Weather weatherService) {
 		Log.log("Weather service unregistered", deviceName);
-		//TODO: Device status
+		DeviceStatus.weatherStatus = DeviceStatus.WeatherStatus.UNREGISTERED;
 		if (weatherThread != null) {
 			weatherThread.stopThread();
 			try {

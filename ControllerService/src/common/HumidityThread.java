@@ -26,14 +26,36 @@ public class HumidityThread extends Thread {
 				}
 			}
 			
+			if (DeviceStatus.weatherStatus == DeviceStatus.WeatherStatus.SUNNY) {
+				int rd = randomDecrease();
+				if (humidity - rd > 0) {
+					humidity -= rd;
+				} else {
+					humidity = 0;
+				}
+			} else if (DeviceStatus.weatherStatus == DeviceStatus.WeatherStatus.LIGHT_RAIN) {
+				int ri = randomRainIncrease();
+				if (humidity + ri > 100) {
+					humidity = 100;
+				} else {
+					humidity += ri;
+				}
+			} else if (DeviceStatus.weatherStatus == DeviceStatus.WeatherStatus.HEAVY_RAIN) {
+				int ri = 2*randomRainIncrease();
+				if (humidity + ri > 100) {
+					humidity = 100;
+				} else {
+					humidity += ri;
+				}
+			}
+			
 			if (DeviceStatus.humidityStatus >= 20 && humidity < 20) {
 				Log.log("Humidity low", deviceName);
 			} else if (DeviceStatus.humidityStatus >= 10 && humidity < 10) {
 				Log.log("Humidity very low", deviceName);
 			}
-			DeviceStatus.humidityStatus = humidity;
 			
-			//TODO: Increase humidity if raining
+			DeviceStatus.humidityStatus = humidity;
 			
 			try {
 				Thread.sleep(200);
@@ -44,6 +66,10 @@ public class HumidityThread extends Thread {
 
 	public void stopThread() {
 		this.running = false;
+	}
+	
+	private int randomRainIncrease() {
+		return (new java.util.Random().nextInt(10) + 5);
 	}
 	
 	private int randomDecrease() {

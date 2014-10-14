@@ -1,7 +1,9 @@
 package common;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /*
  * 1d = 4.8s
@@ -18,7 +20,7 @@ public class TimeThread extends Thread {
 		super(threadName);
 		if (currentTime == null) {
 			currentTime = new Date();
-			currentTime.setTime(currentTime.getTime() - (currentTime.getTime() % (4800 * systemTimeRatio)));
+			currentTime.setTime(currentTime.getTime() - (currentTime.getTime() % (200 * systemTimeRatio)));
 		}
 	}
 	
@@ -41,6 +43,12 @@ public class TimeThread extends Thread {
 	
 	public Date getCurrentTime() {
 		return this.currentTime;
+	}
+	
+	public int getCurrentHour() {
+		Calendar calendar = GregorianCalendar.getInstance();
+		calendar.setTime(currentTime);
+		return calendar.get(Calendar.HOUR_OF_DAY);
 	}
 	
 	public String getFormattedTime() {
